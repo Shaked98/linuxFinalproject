@@ -62,3 +62,20 @@ Write_to_record_log_function ()
 
 
 }
+record_name_vld_function()
+{ 
+#input:expression 
+
+
+}
+
+amount_vld_function()
+{ 
+#input: expression
+
+
+}
+
+
+
+
