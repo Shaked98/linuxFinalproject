@@ -63,7 +63,11 @@ then
 		let amount_counter=$amount_counter+$i
 	
 	done
-	echo "the sum of all amounts is $amount_counter"
+	if [ $amount_counter -gt 0 ]
+	then 
+		echo "the sum of all amounts is $amount_counter"
+	fi
+	
 	
 
 else
