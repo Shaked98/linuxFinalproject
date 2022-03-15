@@ -46,7 +46,30 @@ Update_record_amount_function ()
 Print_total_amount_function ()
 {
 # no input parameters
+# will take a records_file as input $1
 
+#! /bin/bash
+#check if file is empty
+
+if  [ -s $1 ] 
+then
+	x=$(cat $1 | cut -d "," -f2)
+	amount_arr=($x)
+	amount_counter=0
+	# let size=${#amount_arr[@]}-1
+	
+	for i in ${amount_arr[@]}
+	do
+		let amount_counter=$amount_counter+$i
+	
+	done
+	echo "the sum of all amounts is $amount_counter"
+	
+
+else
+	echo "the file $1 is empty" 
+
+fi
 }
 
 Print_sorted_record_file_function ()
