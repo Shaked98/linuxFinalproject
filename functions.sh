@@ -67,7 +67,7 @@ Delete_record_function ()
 
 read -p "please insert record name to delete:" delete_record_name
 record_name_vld_function $delete_record_name
-while [ ! $rcdchk ]
+while [ $rcdchk  != "true" ]
 do
         read -p "Invalid Record Name. Insert Record Name: " delete_record_name
         record_name_vld_function $delete_record_name
@@ -75,7 +75,7 @@ done
 # check valid number 'delete_amount"
 read -p "please insert the amount of Copies to delete: " delete_amount
 amount_vld_function $delete_amount
-while [ ! $numchk ]
+while [ $numchk  != "true" ]
 do
         read -p "please insert the amount of Copies to delete: " delete_amount
         amount_vld_function $delete_amount
