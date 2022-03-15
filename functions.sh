@@ -6,56 +6,58 @@ Insert_record_function ()
 # as input:record_amount
         # check valid string
         read -p "Insert Record Name: " rcd
-        record_name_vld_function  $rcd
-        echo $rcdchk
+        record_name_vld_function $rcd
         while [ $rcdchk != "true" ]
         do
-                read -p "Invalid Record Name. please insert record name that contins [a-z][0-9] and spaces:  " rcd
+                read -p "Invalid Record Name. Insert Record Name:" rcd
                 record_name_vld_function $rcd
         done
         # check valid number
         read -p "Insert Amount of Copies: " amount
         amount_vld_function $amount
-        echo $numchk
         while [ $numchk != "true" ]
         do
-                read -p "invalid ecord amounr. please insert an amount of Copies that contains [0-9]:    " amount
+                read -p "Insert Amount of Copies: " amount
                 amount_vld_function $amount
         done
-
         Search_string_in_file $rcd
-        if [ -z $record_name ]
-        then
-                echo "$rcd,$amount" >> $FILE
-                #log new record
-                echo "log new record $rcd,$amount"
-        else
-                PS3="Select existing record or enter N|n|new for a new record: "
-                select var in ${record_name[@]}
-                do
-                        case $REPLY in
-                        N|n|new) echo "$rcd,$amount" >> $FILE
-                        #log new record
-                        #rihan:why break? 
-                        echo "log new record with $rcd,$amount"; break
-                        ;;
-                        *) amount_vld_function $REPLY
-                        if [ $numchk ]
-                        then
-                                let REPLY-=1 #fix array usage
-                                let amount+=${record_amount[$REPLY]}
-                                sed -i "s/$var,${record_amount[$REPLY]}/$var,$amount/" $FILE
-                                echo " '${record_name[var]}' amount has been updated from '${record_amount[$REPLY]}' to '$amount' in file: $FILE"
-                                Status="Success"
-                                Write_to_record_log_function
-                                break
-                        else
-                                echo "wrong selection! try again. Record: "
-                        fi
-                        ;;
-                        esac
-                done
-        fi
+if [[ $counter -eq 1 ]]; then
+#if there is only 1 result add to it
+let new_amount=${record_amount[0]}+$amount
+string_holder="${record_name[0]},${record_amount[0]}"
+STRING_HOLDER="${record_name[0]},$new_amount"
+	sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
+	echo "'${record_name[0]}' amount has been updated from '${record_amount[0]}' to '$new_amount'"
+	Status="Success"
+	Write_to_record_log_function
+ elif [[ $counter -gt 1 ]]; then
+	#IF MORE THAN 1 RESULT MAKE A MENU
+	PS3="Choose an option or quit: "
+	option_to_quit="Quit"
+	Menu="$x$rcd,$option_to_quit"
+	select var in $Menu;
+		do
+		#IF THE USER CHOOSES QUIT HE GOES BACK TO MAIN MENU
+		if [[ $var == "Quit" ]]; then
+			break;
+		elif [[ $var == $rcd ]]; then
+		#IF USER CHOOSES TO USE HIS STRING AS NEW DISK
+			echo "$rcd,$amount" >> $FILE
+			break;
+		else
+			echo
+		fi
+			let count_from_zero=$REPLY-1
+			let new_amount=${record_amount[$count_from_zero]}+$amount
+string_holder="${record_name[count_from_zero]},${record_amount[count_from_zero]}"
+STRING_HOLDER="${record_name[count_from_zero]},$new_amount"
+			sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
+			echo "'${record_name[$count_from_zero]}' amount has been updated from '${record_amount[$count_from_zero]}' to '$new_amount'"
+		break;
+		done
+else
+	echo "$rcd,$amount" >> $FILE
+fi
 }
 
 
