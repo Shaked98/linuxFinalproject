@@ -19,7 +19,7 @@ while true; do
                 5)echo "update record amount function"};;
                 6)echo "Print all record amount function";;
                 7)echo "Print sort record function";;
-                8)echo "quit" ;;
+                8) Exit ;;
                 *)echo "Invalid number"
         esac
 done
