@@ -7,17 +7,19 @@ Insert_record_function ()
         # check valid string
         read -p "Insert Record Name: " rcd
         record_name_vld_function  $rcd
-        while [ ! $rcdchk ]
+        echo $rcdchk
+        while [ $rcdchk != "true" ]
         do
-                read -p "Invalid Record Name. Insert Record Name:" rcd
+                read -p "Invalid Record Name. please insert record name that contins [a-z][0-9] and spaces:  " rcd
                 record_name_vld_function $rcd
         done
         # check valid number
         read -p "Insert Amount of Copies: " amount
         amount_vld_function $amount
-        while [ ! $numchk ]
+        echo $numchk
+        while [ $numchk != "true" ]
         do
-                read -p "Insert Amount of Copies: " amount
+                read -p "invalid ecord amounr. please insert an amount of Copies that contains [0-9]:    " amount
                 amount_vld_function $amount
         done
 
@@ -28,14 +30,14 @@ Insert_record_function ()
                 #log new record
                 echo "log new record $rcd,$amount"
         else
-                PS3="Select existing record or N - new record: "
+                PS3="Select existing record or enter N|n|new for a new record: "
                 select var in ${record_name[@]}
                 do
-                        echo $REPLY
                         case $REPLY in
                         N|n|new) echo "$rcd,$amount" >> $FILE
                         #log new record
-                        echo "log new record $rcd,$amount"; break
+                        #rihan:why break? 
+                        echo "log new record with $rcd,$amount"; break
                         ;;
                         *) amount_vld_function $REPLY
                         if [ $numchk ]
@@ -43,7 +45,7 @@ Insert_record_function ()
                                 let REPLY-=1 #fix array usage
                                 let amount+=${record_amount[$REPLY]}
                                 sed -i "s/$var,${record_amount[$REPLY]}/$var,$amount/" $FILE
-                                echo "'$var' amount has been updated from '${record_amount[$REPLY]}' to '$amount'"
+                                echo " '${record_name[var]}' amount has been updated from '${record_amount[$REPLY]}' to '$amount' in file: $FILE"
                                 Status="Success"
                                 Write_to_record_log_function
                                 break
@@ -88,7 +90,7 @@ then
 # record not existed
         echo "the requested $delete_record_name is not exists"
 else
-        PS3="Select existing record "
+        PS3="please select existing record name for the list above:  "
         select var in ${record_name[@]}
         do
                 let REPLY-=1
@@ -132,7 +134,7 @@ if [[ $counter -ne 0 ]]; then
 	done
 		echo "We found $counter results for '$user_input' "
 	else
-		echo "The search has failed."
+		echo "finished the search operation, can no find any match"
 fi
 }
 

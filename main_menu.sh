@@ -4,9 +4,9 @@
 source functions.sh
 FILE=$1
 
-arr=( "Insert record" "Delete record" "Search record" "Update record Name" "Update record Amount" "Print All record Amount" "Print Sort record" "Euser_inputit" )
+#arr=( "Insert record" "Delete record" "Search record" "Update record Name" "Update record Amount" "Print All record Amount" "Print Sort record" "Euser_inputit" )
  echo ""
- echo "=========== Menue ============"
+ echo "=========== Menu ============================"
  echo ""
  echo "1. Insert cd "
  echo "2. Delete cd "
@@ -17,9 +17,10 @@ arr=( "Insert record" "Delete record" "Search record" "Update record Name" "Upda
  echo "7. Print Sort CD"
  echo "8. Exit"
  echo ""
- echo "=============================="
+ echo "=============================================="
 arr=( "Insert record" "Delete record" "Search record" "Update record Name" "Update record Amount" "Print All record Amount" "Print Sort record" "Euser_inputit" )
 while true; do
+
         read -p "please choose an option between 1-8: " user_input
         case $user_input in
                 1)Insert_record_function ;;
