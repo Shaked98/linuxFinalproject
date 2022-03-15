@@ -24,28 +24,38 @@ Insert_record_function ()
         Search_string_in_file $rcd
         if [ -z $record_name ]
         then
-                echo "$FILE"
                 echo "$rcd,$amount" >> $FILE
                 #log new record
                 echo "log new record $rcd,$amount"
         else
                 PS3="Select existing record or N - new record: "
-                select var in $record_name
+                select var in ${record_name[@]}
                 do
+                        echo $REPLY
                         case $REPLY in
                         N|n|new) echo "$rcd,$amount" >> $FILE
                         #log new record
                         echo "log new record $rcd,$amount"; break
                         ;;
-                        *) Update_record_amount_function; break
+                        *) amount_vld_function $REPLY
+                        if [ $numchk ]
+                        then
+                                let REPLY-=1 #fix array usage
+                                let amount+=${record_amount[$REPLY]}
+                                sed -i "s/$var,${record_amount[$REPLY]}/$var,$amount/" $FILE
+                                echo "'$var' amount has been updated from '${record_amount[$REPLY]}' to '$amount'"
+                                Status="Success"
+                                Write_to_record_log_function
+                                break
+                        else
+                                echo "wrong selection! try again. Record: "
+                        fi
                         ;;
                         esac
                 done
         fi
-
-
-
 }
+
 
 Delete_record_function ()
 {
