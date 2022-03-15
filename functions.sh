@@ -24,6 +24,7 @@ Insert_record_function ()
         Search_string_in_file $rcd
         if [ -z $record_name ]
         then
+                echo "$FILE"
                 echo "$rcd,$amount" >> $FILE
                 #log new record
                 echo "log new record $rcd,$amount"
@@ -71,7 +72,7 @@ do
 done
 # search for delete_record_name:
 Search_string_in_file $delete_record_name
-echo ${record_name[@]}
+
 if [ -z $record_name ]
 then
 # record not existed
@@ -105,11 +106,11 @@ then
 else
 	user_input=$1
 fi
-string_validate $user_input
+record_name_vld_function $user_input
 IFS=','
-x=$(cat file.csv |grep $user_input|cut -d ',' -f1|tr '\n' ',')
+x=$(cat $FILE |grep $user_input|cut -d ',' -f1|tr '\n' ',')
 record_name=($x)
-y=$(cat file.csv |grep $user_input|cut -d ',' -f2|tr '\n' ',')
+y=$(cat $FILE|grep $user_input|cut -d ',' -f2|tr '\n' ',')
 record_amount=($y)
 counter=${#record_name[@]}
 i=0
@@ -138,7 +139,7 @@ read -p "Please enter the New Name: " new_name
 Search_string_in_file $old_name
 Action="UpdateName"
 if [[ $counter -eq 1 ]]; then
-	sed -i "s/${record_name[0]}/$new_name/" file.csv
+	sed -i "s/${record_name[0]}/$new_name/" $FILE
 	echo "'${record_name[0]}' has been updated to $new_name"
 	Status="Success"
 	Write_to_record_log_function
@@ -152,7 +153,7 @@ Menu=$x$option_to_quit
 select var in $Menu;
 do
 let count_from_zero=$REPLY-1
-	sed -i "s/${record_name[$count_from_zero]}/$new_name/" file.csv
+	sed -i "s/${record_name[$count_from_zero]}/$new_name/" $FILE
 	echo "${record_name[$count_from_zero]} has been updated to $new_name"
 	Status="Success"
 	Write_to_record_log_function
@@ -182,7 +183,7 @@ Search_string_in_file $rec_name
 Action="UpdateAmount"
 if [[ $counter -eq 1 ]]; then
 #SETTING STATUS
-	sed -i "s/${record_amount[0]}/$rec_amount/" file.csv
+	sed -i "s/${record_amount[0]}/$rec_amount/" $FILE
 	echo "'${record_name[0]}' amount has been updated from '${record_amount[0]}' to '$rec_amount'"
 	Status="Success"
 	Write_to_record_log_function
@@ -194,7 +195,7 @@ Menu=$x$option_to_quit
 select var in $Menu;
 do
 let count_from_zero=$REPLY-1
-	sed -i "s/${record_amount[$count_from_zero]}/$rec_amount/" file.csv
+	sed -i "s/${record_amount[$count_from_zero]}/$rec_amount/" $FILE
 	echo "'${record_name[$count_from_zero]}' amount has been updated from '${record_amount[$count_from_zero]}' to '$rec_amount'"
 	Status="Success"
 	Write_to_record_log_function
@@ -261,8 +262,6 @@ echo -n $( date "+%D %T" ) >> recordFileName_log
 echo " $Action $Status" >> recordFileName_log
 }
 
-
-}
 record_name_vld_function()
 { 
 #input:expression 
