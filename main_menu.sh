@@ -37,8 +37,8 @@ while true; do
                 3)Search_string_in_file ;;
                 4)Update_record_name_function ;;
                 5)Update_record_amount_function ;;
-                6)Print_total_amount_function ;;
-                7)Print_sorted_record_file_function ;;
+                6)Print_total_amount_function $FILE ;;
+                7)Print_sorted_record_file_function $FILE;;
                 8) exit ;;
                 *)echo "Invalid number"
         esac
