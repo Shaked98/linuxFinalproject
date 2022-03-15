@@ -7,7 +7,6 @@ Insert_record_function ()
         # check valid string
         read -p "Insert Record Name: " rcd
         record_name_vld_function  $rcd
-        echo $rcdchk
         while [ $rcdchk != "true" ]
         do
                 read -p "Invalid Record Name. please insert record name that contins [a-z][0-9] and spaces:  " rcd
@@ -16,7 +15,6 @@ Insert_record_function ()
         # check valid number
         read -p "Insert Amount of Copies: " amount
         amount_vld_function $amount
-        echo $numchk
         while [ $numchk != "true" ]
         do
                 read -p "invalid ecord amounr. please insert an amount of Copies that contains [0-9]:    " amount
