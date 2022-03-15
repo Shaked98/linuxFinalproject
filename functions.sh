@@ -55,9 +55,31 @@ Delete_record_function ()
 
 Search_string_in_file ()
 {
-# as input:str
-
-
+# as input:str from user
+if [ $# -eq 0 ];
+then
+	read -p "Enter the record you search for: " user_input
+else
+	user_input=$1
+fi
+string_validate $user_input
+IFS=','
+x=$(cat file.csv |grep $user_input|cut -d ',' -f1|tr '\n' ',')
+record_name=($x)
+y=$(cat file.csv |grep $user_input|cut -d ',' -f2|tr '\n' ',')
+record_amount=($y)
+counter=${#record_name[@]}
+i=0
+if [[ $counter -ne 0 ]]; then
+	while [[ $i -lt $counter && $# -eq 0 ]]
+	do
+			echo "$i. ${record_name[$i]},${record_amount[$i]}"
+			let i=$i+1
+	done
+		echo "We found $counter results for '$user_input' "
+	else
+		echo "The search has failed."
+fi
 }
 
 Update_record_name_function ()
