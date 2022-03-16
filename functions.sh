@@ -57,7 +57,9 @@ if [[ $counter -eq 1 ]]; then
 		break;
 		done
 else
+	# new record will be add in the records file
 	echo "$rcd,$amount" >> $FILE
+	echo "new record added in the $FILE: $rcd,$amount"
 fi
 }
 
@@ -137,7 +139,7 @@ if [[ $counter -ne 0 ]]; then
 	done
 		echo "We found $counter results for '$user_input' "
 	else
-		echo "finished the search operation, can no find any match"
+		echo "finished the search operation, can not find any match"
 fi
 }
 
