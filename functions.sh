@@ -7,6 +7,7 @@ Insert_record_function ()
         # check valid string
         read -p "Insert Record Name: " rcd
         record_name_vld_function $rcd
+
         while [ $rcdchk != "true" ]
         do
                 read -p "Invalid Record Name. Insert Record Name:" rcd
@@ -22,10 +23,10 @@ Insert_record_function ()
         done
         Search_string_in_file $rcd
 if [[ $counter -eq 1 ]]; then
-#if there is only 1 result add to it
-let new_amount=${record_amount[0]}+$amount
-string_holder="${record_name[0]},${record_amount[0]}"
-STRING_HOLDER="${record_name[0]},$new_amount"
+	#if there is only 1 result add to it
+	let new_amount=${record_amount[0]}+$amount
+	string_holder="${record_name[0]},${record_amount[0]}"
+	STRING_HOLDER="${record_name[0]},$new_amount"
 	sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
 	echo "'${record_name[0]}' amount has been updated from '${record_amount[0]}' to '$new_amount'"
 	Status="Success"
@@ -49,8 +50,8 @@ STRING_HOLDER="${record_name[0]},$new_amount"
 		fi
 			let count_from_zero=$REPLY-1
 			let new_amount=${record_amount[$count_from_zero]}+$amount
-string_holder="${record_name[count_from_zero]},${record_amount[count_from_zero]}"
-STRING_HOLDER="${record_name[count_from_zero]},$new_amount"
+			string_holder="${record_name[count_from_zero]},${record_amount[count_from_zero]}"
+			STRING_HOLDER="${record_name[count_from_zero]},$new_amount"
 			sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
 			echo "'${record_name[$count_from_zero]}' amount has been updated from '${record_amount[$count_from_zero]}' to '$new_amount'"
 		break;
@@ -71,7 +72,7 @@ Delete_record_function ()
 
 read -p "please insert record name to delete:" delete_record_name
 record_name_vld_function $delete_record_name
-while [ ! $rcdchk ]
+while [ $rcdchk  != "true" ]
 do
         read -p "Invalid Record Name. Insert Record Name: " delete_record_name
         record_name_vld_function $delete_record_name
@@ -79,7 +80,7 @@ done
 # check valid number 'delete_amount"
 read -p "please insert the amount of Copies to delete: " delete_amount
 amount_vld_function $delete_amount
-while [ ! $numchk ]
+while [ $numchk  != "true" ]
 do
         read -p "please insert the amount of Copies to delete: " delete_amount
         amount_vld_function $delete_amount
