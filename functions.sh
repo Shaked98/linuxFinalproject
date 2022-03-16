@@ -58,16 +58,21 @@ if [[ $counter -eq 1 ]]; then
 		else
 			echo
 		fi
+		# if the user chose an existed record name from the menu:
+		#$REPLY start from 1
 		let count_from_zero=$REPLY-1
 		let new_amount=${record_amount[$count_from_zero]}+$amount
+		# finding the data row that has this specific record name and its amount in array:
 		string_holder="${record_name[count_from_zero]},${record_amount[count_from_zero]}"
+		# preparing the new data raw that has this specific record name and its NEW amount in array:
 		STRING_HOLDER="${record_name[count_from_zero]},$new_amount"
+		# replace the data rows:
 		sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
 		echo "'${record_name[$count_from_zero]}' amount has been updated from '${record_amount[$count_from_zero]}' to '$new_amount'"
 		break;
 		done
 else
-	# new record will be add in the records file
+	# param rcd is not found in the records file, a new record will be add in:
 	echo "$rcd,$amount" >> $FILE
 	echo "new record added in the $FILE: $rcd,$amount"
 fi
