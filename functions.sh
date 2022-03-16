@@ -227,6 +227,7 @@ Print_total_amount_function ()
 {
 # no input parameters
 # will take a records_file as input $1
+# will print the total amount of all the records in the records file.
 
 #! /bin/bash
 #check if file is empty
@@ -236,8 +237,7 @@ then
 	x=$(cat $1 | cut -d "," -f2)
 	amount_arr=($x)
 	amount_counter=0
-	# let size=${#amount_arr[@]}-1
-	
+	#sum all amounts in th array:
 	for i in ${amount_arr[@]}
 	do
 		let amount_counter=$amount_counter+$i
