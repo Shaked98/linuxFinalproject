@@ -58,12 +58,12 @@ if [[ $counter -eq 1 ]]; then
 		else
 			echo
 		fi
-			let count_from_zero=$REPLY-1
-			let new_amount=${record_amount[$count_from_zero]}+$amount
-			string_holder="${record_name[count_from_zero]},${record_amount[count_from_zero]}"
-			STRING_HOLDER="${record_name[count_from_zero]},$new_amount"
-			sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
-			echo "'${record_name[$count_from_zero]}' amount has been updated from '${record_amount[$count_from_zero]}' to '$new_amount'"
+		let count_from_zero=$REPLY-1
+		let new_amount=${record_amount[$count_from_zero]}+$amount
+		string_holder="${record_name[count_from_zero]},${record_amount[count_from_zero]}"
+		STRING_HOLDER="${record_name[count_from_zero]},$new_amount"
+		sed -i "s/$string_holder/$STRING_HOLDER/" $FILE
+		echo "'${record_name[$count_from_zero]}' amount has been updated from '${record_amount[$count_from_zero]}' to '$new_amount'"
 		break;
 		done
 else
@@ -144,8 +144,8 @@ i=0
 if [[ $counter -ne 0 ]]; then
 	while [[ $i -lt $counter && $# -eq 0 ]]
 	do
-			echo "$i. ${record_name[$i]},${record_amount[$i]}"
-			let i=$i+1
+		echo "$i. ${record_name[$i]},${record_amount[$i]}"
+		let i=$i+1
 	done
 		echo "We found $counter results for '$user_input' "
 	else
