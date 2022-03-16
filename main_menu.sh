@@ -2,7 +2,12 @@
 
 #import functions
 source functions.sh
+
+# creat the file:
+init "$1"
+#records file:
 FILE=$1
+echo "the records file is $FILE"
 
 #arr=( "Insert record" "Delete record" "Search record" "Update record Name" "Update record Amount" "Print All record Amount" "Print Sort record" "Euser_inputit" )
  echo ""

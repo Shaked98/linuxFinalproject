@@ -1,5 +1,15 @@
 #! /bin/bash
 
+
+#init function for records file check
+init()
+{
+#if file is not exists, will create one with the requested name.
+   if [ ! -f "$1" ]; then
+      touch "$1"
+   fi
+}
+
 Insert_record_function ()
 {
 # as input:record_name
