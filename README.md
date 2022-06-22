@@ -1,8 +1,8 @@
 # Records Shop Project(CRUD)
-The project is written in bash and provides a Menu of options to choose from.
+The project is written in bash and provides the user a menu of options to choose from.
 
-1. Insert cd 
-2. Delete cd 
+1. Insert cd
+2. Delete cd
 3. Search cd
 4. Update cd Name
 5. Update cd Amount
