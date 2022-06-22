@@ -11,4 +11,5 @@ The project is written in bash and provides the user a menu of options to choose
 8. Exit
 
 The project writes the records to a .csv file that is saved locally.
-it's also making a logging file that writes the events and the timestamp.
+
+it's also making a logging file that documents the success/failure events and the timestamp.
